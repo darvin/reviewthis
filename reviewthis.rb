@@ -3,7 +3,7 @@ require 'sinatra'
 require 'json'
 require 'mustache/sinatra'
 require 'pony'
-require 'octopussy'
+require 'github_api'
 
 configure do
   set :mustache, {
@@ -80,9 +80,10 @@ post '/' do
       }
       
       # let's find all the github users
+      github_client = Github.new
       message.scan(USER) do |username|
-        user = Octopussy.user(username) # get the github user info
-        vars[:username] = user.name
+        user = github_client.users.get(:user => username)
+        vars[:username] = user.login
         vars[:email] = user.email
         mail(vars)
       end
