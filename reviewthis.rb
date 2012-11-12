@@ -6,10 +6,7 @@ require 'pony'
 require 'github_api'
 
 configure do
-  set :mustache, {
-     :views     => 'views/',
-     :templates => 'templates/'
-   }
+
    
   # regex's
   USER = /[^a-z0-9_]@([a-z0-9_]+)/i
@@ -44,9 +41,22 @@ end
 helpers do
   # mail helper. Thnx Pony!
   def mail(vars)
-    body = mustache :email, {}, vars
-    html_body = mustache :email_html, {}, vars    
-    Pony.mail(:to => vars[:email], :from => options.from, :subject => "[#{vars[:repo_name]}] code review request from #{vars[:commit_author]}", :body => body,:html_body => html_body, :via => options.via, :via_options => options.via_options) 
+    body = %{
+      Hi #{vars[:username]}!
+
+      #{vars[:commit_author]} wants you to review a recent commit to #{vars[:repo_name]} on github.
+
+      Review it: #{vars[:commit_url]}
+
+      Commit details
+      ==============
+        commit id:  #{vars[:commit_id]}
+        committed:  #{vars[:commit_relative_time]} (#{vars[:commit_timestamp]})
+        message:  #{vars[:commit_message]}  
+
+      sent by #reviewthis
+    }
+    Pony.mail(:to => vars[:email], :from => options.from, :subject => "[#{vars[:repo_name]}] code review request from #{vars[:commit_author]}", :body => body, :via => options.via, :via_options => options.via_options) 
   end
 end
 
