@@ -82,6 +82,7 @@ post '/' do
       # let's find all the github users
       github_client = Github.new
       message.scan(USER) do |username|
+        username = username[0]
         user = github_client.users.get(:user => username)
         vars[:username] = user.login
         vars[:email] = user.email
