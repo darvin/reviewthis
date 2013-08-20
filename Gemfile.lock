@@ -1,12 +1,12 @@
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     crack (0.4.1)
       safe_yaml (~> 0.9.0)
     hashie (0.2.2)
     httparty (0.4.5)
       crack (>= 0.1.1)
-    json (1.2.0)
+    json (1.8.0)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -30,7 +30,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  json (= 1.2.0)
+  json
   mustache (= 0.11.2)
   octopussy (= 0.2.3)
   pony (= 1.0)
